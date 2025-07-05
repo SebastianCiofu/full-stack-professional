@@ -8,9 +8,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class MenuBarComponent {
 
-  menu: Array<MenuItem> = [
+  menu: MenuItem[] = [
     {label: 'Home', icon: 'pi pi-home'},
-    {label: 'Customers', icon: 'pi pi-users'},
-    {label: 'Settings', icon: 'pi pi-cog'}
   ]
 }

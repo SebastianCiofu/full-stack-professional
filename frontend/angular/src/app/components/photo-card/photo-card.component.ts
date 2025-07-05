@@ -8,19 +8,6 @@ import { FileService } from 'src/app/services/file.service';
   styleUrls: ['./photo-card.component.scss']
 })
 export class PhotoCardComponent {
-  @Input() photo: any;
-  @Input() customerId: number = 0;
-  @Input() photoIndex: number = 0;
+  @Input() base64: string = '';
 
-  constructor(private http: HttpClient) {}
-
-  photoUrls: string[] = [];
-
-  ngOnInit() {
-    this.http.get<string[]>(`http://localhost:8080/api/v1/customers/${this.customerId}/profile-images`)
-      .subscribe(urls => {
-        this.photoUrls = urls;
-        console.log(this.photoUrls);
-      });
-  }
 }

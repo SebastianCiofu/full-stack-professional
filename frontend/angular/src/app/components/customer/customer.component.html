@@ -21,24 +21,34 @@
       <app-header-bar></app-header-bar>
     </div>
     <div class="main-container p-3">
-      <button
+      <!-- <button
         pButton
         icon="pi pi-plus"
         label="Create customer"
         class="p-button-success"
         (click)="createCustomer()"
       >
-      </button>
-      <div class="flex justify-content-center align-items-center flex-wrap gap-5 mt-4">
-        <app-customer-card
-          *ngFor="let customer of customers; let index = index"
-          [customer]="customer"
-          [customerIndex]="index"
-          (delete)="deleteCustomer($event)"
-          (update)="updateCustomer($event)"
-        ></app-customer-card>
+      </button> -->
+      <input
+      type="file"
+      accept="image/*"
+      multiple
+      #fileInput
+      style="display: none"
+      (change)="onFileSelected($event)"
+    />
+      <button
+      pButton
+      icon="pi pi-plus"
+      label="Upload Photos"
+      class="p-button-success"
+      (click)="fileInput.click()"
+    >
+    </button>
+      <div class="flex justify-content-start align-items-center flex-wrap gap-5 mt-4">
         <app-photo-card
-          [customerId]="3"
+          *ngFor="let base64 of photoUrls"
+          [base64]="base64"
         ></app-photo-card>
       </div>
     </div>
