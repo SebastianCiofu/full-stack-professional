@@ -1,5 +1,21 @@
 <div>
   <h2>{{ operation === 'update' ? 'Update Customer' : 'New customer' }}</h2>
+
+  <div class="upload-section">
+    <input
+      type="file"
+      accept="image/*"
+      multiple
+      #fileInput
+      style="display: none"
+      (change)="onFileSelected($event)"
+    />
+    <button (click)="fileInput.click()">
+      Upload Photos
+    </button>
+    <span class="upload-hint">Select multiple photos to upload</span>
+  </div>
+
   <div class="field">
     <label for="firstname">Name</label>
     <input

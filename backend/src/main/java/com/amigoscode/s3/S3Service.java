@@ -6,9 +6,13 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class S3Service {
@@ -41,5 +45,17 @@ public class S3Service {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public List<String> listObjects(String bucketName, String prefix) {
+        ListObjectsV2Request listObjectsReq = ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(prefix)
+                .build();
+        return s3.listObjectsV2(listObjectsReq)
+                .contents()
+                .stream()
+                .map(S3Object::key)
+                .collect(Collectors.toList());
     }
 }

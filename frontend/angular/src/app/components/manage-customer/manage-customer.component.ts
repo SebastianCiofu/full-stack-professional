@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CustomerRegistrationRequest } from '../../models/customer-registration-request';
+import {FileService} from "../../services/file.service";
 
 @Component({
   selector: 'app-manage-customer',
@@ -16,6 +17,9 @@ export class ManageCustomerComponent {
   submit: EventEmitter<CustomerRegistrationRequest> = new EventEmitter<CustomerRegistrationRequest>();
   @Output()
   cancel: EventEmitter<void> = new EventEmitter<void>();
+
+  constructor(private fileService: FileService) {
+  }
 
   get isCustomerValid(): boolean {
     return this.hasLength(this.customer.name) &&
@@ -39,5 +43,18 @@ export class ManageCustomerComponent {
 
   onCancel() {
     this.cancel.emit();
+  }
+
+  onFileSelected(event: Event): void {
+    const input = (event as any).target as HTMLInputElement;
+    if (input.files?.length) {
+      const file = input.files[0];
+      // TODO: change to this.customer.id
+      this.fileService.addImageToEvent(3, file)
+        .subscribe({
+          next: () => alert('Upload successful!'),
+          error: err => alert('Upload failed: ' + err)
+        });
+    }
   }
 }

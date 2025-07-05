@@ -75,4 +75,13 @@ public class CustomerController {
         return customerService.getCustomerProfileImage(customerId);
     }
 
+    @GetMapping(
+            value = "{customerId}/profile-images",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public List<String> getCustomerProfileImages(
+            @PathVariable("customerId") Integer customerId) {
+        return customerService.getCustomerProfileImagesBase64(customerId);
+    }
+
 }

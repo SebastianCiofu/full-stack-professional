@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.Base64;
 
 @Service
 public class CustomerService {
@@ -155,6 +156,20 @@ public class CustomerService {
                 "profile-images/%s/%s".formatted(customerId, customer.profileImageId())
         );
         return profileImage;
+    }
+
+    public List<String> getCustomerProfileImagesBase64(Integer customerId) {
+        checkIfCustomerExistsOrThrow(customerId);
+        String prefix = "profile-images/%s/".formatted(customerId);
+        List<String> keys = s3Service.listObjects(s3Buckets.getCustomer(), prefix);
+        if (keys.isEmpty()) {
+            throw new ResourceNotFoundException(
+                "customer with id [%s] profile images not found".formatted(customerId));
+        }
+        return keys.stream()
+                .map(key -> s3Service.getObject(s3Buckets.getCustomer(), key))
+                .map(bytes -> Base64.getEncoder().encodeToString(bytes))
+                .collect(Collectors.toList());
     }
 }
 

@@ -28,8 +28,8 @@ public class Main {
             CustomerRepository customerRepository,
             PasswordEncoder passwordEncoder) {
         return args -> {
-            createRandomCustomer(customerRepository, passwordEncoder);
-            // testBucketUploadAndDownload(s3Service, s3Buckets);
+            //createRandomCustomer(customerRepository, passwordEncoder);
+            //testBucketUploadAndDownload(s3Service, s3Buckets);
         };
     }
 
